@@ -159,24 +159,22 @@
                 len = self.initialPreview.length,
                 cap = self.initialCaption.length,
                 caption = (cap > 0) ? self.initialCaption : len + ' file selected';
-            if (isArray(content) && len > 0) {
-                for (var i = 0; i < len; i++) {
-                    html += '<div class="file-preview-frame">' + content[i] + "</div>\n";
-                }
-                if (len > 1 && cap == 0) {
-                    caption = len + ' files selected';
-                }
-            }
-            else if (len > 0) {
+            if (len > 0) {
+              if (isArray(content)) {
+                  for (var i = 0; i < len; i++) {
+                      html += '<div class="file-preview-frame">' + content[i] + "</div>\n";
+                  }
+                  if (len > 1 && cap == 0) {
+                      caption = len + ' files selected';
+                  }
+              } else {
                 html = '<div class="file-preview-frame">' + content + '</div>';
+              }
+              self.initialPreviewContent = html;
+              self.$preview.html(html);
             }
-            else {
-                return;
-            }
-            self.initialPreviewContent = html;
-            self.$preview.html(html);
             self.$caption.html(caption);
-            self.$captionContainer.attr('title', caption);            
+            self.$captionContainer.attr('title', caption);
             self.$container.removeClass('file-input-new');
         },
         clear: function (e) {
